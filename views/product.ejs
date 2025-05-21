@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Products</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+
+    .container {
+      max-width: 1500px;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      width: 240px;
+      padding: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 0.8rem;
+    }
+
+    .product-card h3 {
+      font-size: 1.1rem;
+      color: #2c3e50;
+      margin: 0.5rem 0;
+    }
+
+    .product-card p {
+      color: #555;
+      font-size: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #e67e22;
+      font-size: 1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .btn {
+      background-color: #3498db;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #2980b9;
+    }
+
+    @media (max-width: 600px) {
+      .product-card {
+        width: 100%;
+      }
+    }
+    .Anchor{
+        font-size: 20px;
+        color : orange;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/cart"  class="Anchor"style="text-decoration: none; float: right; margin-right: 20px; color: white; font-weight: bold;">🛒View Cart</a>
+    <h1>Available Products</h1>
+    <div class="product-list">
+      <% products.forEach(function(product) { %>
+        <div class="product-card">
+          <img src="<%= product.image %>" alt="<%= product.name %>" />
+          <h3><%= product.name %></h3>
+          <p><%= product.description %></p>
+          <div class="price">₹<%= product.price %></div>
+
+          <!-- 👇 Cart form -->
+          <form method="POST" action="/add-to-cart/<%= product._id %>">
+            <button type="submit" class="btn">Add to Cart</button>
+          </form>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+
+  <script>
+       if (req.query.added) {
+        alert('Item added to cart!');
+    } 
+  </script>
+</body>
+</html>

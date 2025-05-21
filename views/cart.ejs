@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Cart</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 2rem;
+      background: #f0f2f5;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .cart-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .cart-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 1rem;
+    }
+    .cart-item img {
+      width: 100px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-right: 1rem;
+    }
+    .item-info {
+      flex: 1;
+    }
+    .item-info h3 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+    .item-info p {
+      color: #555;
+      margin-top: 0.3rem;
+    }
+    .price, .quantity, .total-price {
+      font-weight: bold;
+      color: #e67e22;
+      margin-top: 0.3rem;
+    }
+    .remove-btn {
+      background-color: #e74c3c;
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-left: 1rem;
+      height: 30px;
+      align-self: flex-start;
+    }
+    .remove-btn:hover {
+      background-color: #c0392b;
+    }
+    .cart-total {
+      text-align: right;
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-top: 1.5rem;
+      color: #2c3e50;
+    }
+  </style>
+</head>
+<body>
+  <h1>Your Cart</h1>
+  <div class="cart-container">
+    <% if (cart.length === 0) { %>
+      <p>Your cart is empty.</p>
+    <% } else { %>
+      <% let grandTotal = 0; %>
+      <% cart.forEach((item, index) => { %>
+        <% let totalPrice = item.price * item.quantity; %>
+        <% grandTotal += totalPrice; %>
+        <div class="cart-item">
+          <img src="<%= item.image %>" alt="<%= item.name %>" />
+          <div class="item-info">
+            <h3><%= item.name %></h3>
+            <p><%= item.description %></p>
+            <p class="price">Price: ₹<%= item.price %></p>
+            <p class="quantity">Quantity: <%= item.quantity %></p>
+            <p class="total-price">Total: ₹<%= totalPrice %></p>
+          </div>
+          <form action="/remove-from-cart/<%= item._id %>" method="POST">
+            <button class="remove-btn" type="submit">Remove</button>
+          </form>
+        </div>
+      <% }); %>
+      <div class="cart-total">
+        Grand Total: ₹<%= grandTotal %>
+      </div>
+    <% } %>
+  </div>
+</body>
+</html>
